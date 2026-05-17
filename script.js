@@ -1,3 +1,5 @@
+let selectColorBackground = "black";
+
 function renderBoard(size) {
   let board = document.querySelector(".board");
   let squares = board.querySelectorAll("div");
@@ -8,9 +10,7 @@ function renderBoard(size) {
   let amount = size * size;
   for (let index = 0; index < amount; index++) {
     let square = document.createElement("div");
-    square.addEventListener("mouseover", () => {
-      square.style.backgroundColor = "black";
-    });
+    square.addEventListener("mouseover", setColor);
     square.style.backgroundColor = "blue";
     board.insertAdjacentElement("beforeend", square);
   }
@@ -26,4 +26,29 @@ function changeSize(size) {
   } else {
     console.log("to few squares");
   }
+}
+
+function setColor() {
+  this.style.backgroundColor = selectColorBackground;
+}
+
+function changeColor(element) {
+  let colorPicker = {
+    black: "#36454F",
+    white: "#FAFAFA",
+    random: `#${Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, "0")}`,
+  };
+  if (colorPicker[element]) {
+    selectColorBackground = colorPicker[element];
+  }
+}
+
+function resetColor() {
+  let board = document.querySelector(".board");
+  let squares = board.querySelectorAll("div");
+  squares.forEach((div) => {
+    div.style.backgroundColor = "blue";
+  });
 }
